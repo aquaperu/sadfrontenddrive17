@@ -4,6 +4,7 @@ import { PreloadAllModules, provideRouter, withPreloading } from '@angular/route
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientModule, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,7 +14,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(),
       //withInterceptors([]) colocar un interceptor
-    )
+      
+    ),
+    provideToastr()
 
   ]
 };

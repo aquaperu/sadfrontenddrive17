@@ -1,5 +1,3 @@
-import { parametros } from "src/app/global/parametroGlobal";
-
 /**
  * 
  * @param sheetName - El nombre de la hoja a la que se le aplicaran las operaciones

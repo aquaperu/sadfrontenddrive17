@@ -1,10 +1,11 @@
 import { getIntervalRangeWhithColumn } from '../etiquetasXLS/administraEtiquetasXLS';
 import { getDayName, getFechasContractuales, setDiasConsecutivos } from '../fechas/administraFechas';
 import { setNumerosConsecutivos, setNumerosConsecutivosStart } from '../numeracion/administraNumeracion';
-import { copyDataFromSheets } from 'src/app/funcionesComunes/copiarDatosEntreHojas';
-import { parametros } from 'src/app/global/parametroGlobal';
+
 import {getFechaInicio,getDiasContractuales} from '../../global/ajusteGlobal'
 import { muestraHojaOculta, ocultaHoja } from '../helpXLS/ocultaYmuestraHojaXLS';
+import { parametros } from '../../global/parametroGlobal';
+import { copyDataFromSheets } from '../../funcionesComunes/copiarDatosEntreHojas';
 
 export async function generaTemporalidadMetasDiarias(){
     await Excel.run(async (context) => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AppFormComponent } from "./app-form/app-form.component";
 import { Observable, Subject } from 'rxjs';
 
@@ -17,6 +17,11 @@ interface Person{
 })
 export class AppComponent {
   title = 'sadfrontenddrive17';
-  public person$:Observable<Person> = new Subject();
+  constructor(
+    private readonly router:Router
+  ){}
+  ngOnInit(): void {
+    this.router.navigate(['autenticar/login'])
+  }
   
 }

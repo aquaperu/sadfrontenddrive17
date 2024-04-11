@@ -1,4 +1,5 @@
-import { parametros } from "src/app/global/parametroGlobal";
+import { parametros } from "../../global/parametroGlobal";
+
 /**
  * 
  * @returns - Retorna la captura de datos de la hoja "configuracion", en la secuencia en la que la configuracion del parametro.obra.datos se indica.
