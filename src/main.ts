@@ -4,8 +4,8 @@ import { AppComponent } from './app/app.component';
 
 
 
-  //Office.initialize = reason =>{
+  Office.initialize = reason =>{
     bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
     
-  //}
+  }
