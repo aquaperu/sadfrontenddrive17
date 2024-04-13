@@ -1,5 +1,5 @@
 export const restendpoint = {
-    base:'https://real-shawl-crow.cyclic.app/',//'https://192.168.1.86:3033/',
+    base:'https://splendid-fish-nightgown.cyclic.app/',//'https://192.168.1.86:3033/',
     usuario:{
         lista:'auth/listaauth',
         login:'auth/login',
