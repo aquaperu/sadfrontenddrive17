@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import {MatFormFieldAppearance} from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -39,7 +40,11 @@ export interface confMsg{
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers:[{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}]
+  providers:[
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+
+  ]
 })
 export class LoginComponent {
   
@@ -86,7 +91,7 @@ export class LoginComponent {
     }
 
     this.loading = true;
-    /*this.subscription = this._userService.login(usuario).subscribe({
+    this.subscription = this._userService.login(usuario).subscribe({
       next: (payload:any) => {//respuesta del servidor
         //habilitar un spinner
         this.loading = false
@@ -103,9 +108,9 @@ export class LoginComponent {
         
         console.log('Login completado satisfactoriamente')
       },
-    })*/
+    })
     this.loading = false
-    this.router.navigate(['dashboard/main'])
+    //this.router.navigate(['dashboard/main'])
 
     
     

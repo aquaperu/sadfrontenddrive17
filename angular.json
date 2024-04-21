@@ -62,10 +62,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.js"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "sadfrontenddrive17:build:production",
-              "port": 4444
+              "buildTarget": "sadfrontenddrive17:build:production"
+              
             },
             "development": {
               "buildTarget": "sadfrontenddrive17:build:development"
