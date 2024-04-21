@@ -8,6 +8,7 @@ export const httpCoreInterceptorInterceptor: HttpInterceptorFn = (req, next) => 
     setHeaders: {
       'Content-Type':'application/json',
       'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type,Accept',
       Authorization: `Bearer ${authToken}`
     }
   });

@@ -1,7 +1,7 @@
-const PROXY_HOST = 'https://splendid-fish-nightgown.cyclic.app/';
+const PROXY_HOST = 'https://miniature-space-zebra-7v7j9qg6xrjx266g-4200.app.github.dev/';
 const PROXY_CONFIG = [
     {
-        context:['/'],
+        context:['./'],
         target:PROXY_HOST,
         secure:false
     }
