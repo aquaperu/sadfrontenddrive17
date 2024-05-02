@@ -1,0 +1,12 @@
+:host{
+    --matdialogcontent-height:none;
+    --matdialogcontent-width:none;
+  }
+mat-dialog-content{
+    height: var(--matdialogcontent-height);
+    width: var(--matdialogcontent-width);
+}
+
+body{
+    background-color: blue;
+}

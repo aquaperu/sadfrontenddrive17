@@ -31,8 +31,7 @@
                       
               </mat-card-content>
               <mat-card-actions>
-                <div *ngIf="loading; else content">
-
+                @if(loading){
                   <div class="spinner__loading">
                     <div>
                       <mat-progress-spinner
@@ -42,15 +41,18 @@
                         </mat-progress-spinner>
                     </div>
                   </div>
-                </div>
+
+                }@else{
+                  <button mat-stroked-button color="primary" style="width : 5.0em; font-size: 12px; color: #000;" (click)="login()">Accede</button>
+                  <button mat-stroked-button color="primary" style="width : 5.8em; font-size: 12px; color: #000;" (click)="register()">Regístrate</button>
+                
+                }
+                
 
                   <!--<button mat-stroked-button color="primary"  (click)="login()">Accede</button>-->
                   <!--<button mat-stroked-button color="primary" (click)="register()">Regístrate</button>-->
-                  <ng-template #content>
-
-                    <button mat-stroked-button color="primary" style="width : 5.0em; font-size: 12px; color: #000;" (click)="login()">Accede</button>
-                    <button mat-stroked-button color="primary" style="width : 5.8em; font-size: 12px; color: #000;" (click)="register()">Regístrate</button>
-                  </ng-template>
+                  
+                  
               
               </mat-card-actions>
              

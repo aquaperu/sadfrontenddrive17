@@ -109,12 +109,6 @@ export class LoginComponent {
         console.log('Login completado satisfactoriamente')
       },
     })
-    this.loading = false
-    //this.router.navigate(['dashboard/main'])
-
-    
-    
-
   }
   register(){
     this.router.navigate(['autenticar/registrar'])

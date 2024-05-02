@@ -3,7 +3,7 @@ import { catchError, throwError } from 'rxjs';
 export const httpCoreInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   const authToken = 'YOUR_AUTH_TOKEN_HERE';
   // interceptor que habilita el cors en el cliente de donde está corriendo , tambien debe estar registrado en el servidor
-  //la otra opcion es crear un archivo proxy.config.js , poner el siguiente contenido
+  //la otra opcion es crear un archivo proxy.config.js , poner el siguiente contenido, es el servidor de front end
   /**
    * const PROXY_HOST = 'https://miniature-space-zebra-7v7j9qg6xrjx266g-4200.app.github.dev/';
       const PROXY_CONFIG = [
@@ -28,7 +28,7 @@ en la seccion  "serve": {
     setHeaders: {
       'Content-Type':'application/json',
       
-      'Access-Control-Allow-Origin': 'https://miniature-space-zebra-7v7j9qg6xrjx266g-4200.app.github.dev',
+      'Access-Control-Allow-Origin': 'https://4200-monospace-sadfrontenddrive17-1713883251017.cluster-2xid2zxbenc4ixa74rpk7q7fyk.cloudworkstations.dev',
      
       Authorization: `Bearer ${authToken}`
     }

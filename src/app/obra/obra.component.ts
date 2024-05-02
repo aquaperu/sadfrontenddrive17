@@ -15,6 +15,20 @@ import { getObraid, setObraId } from '../../global/ajusteGlobal';
 import { parametros } from '../../global/parametroGlobal';
 import { importaHojasXls } from '../../funcionesComunes/importarHojas';
 import { restendpoint } from '../../endpoint/restendpoint';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CommonModule } from '@angular/common';
+
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -32,7 +46,24 @@ interface  IConfigViews{
 @Component({
   selector: 'app-mainobra',
   standalone: true,
-  imports: [],
+  imports: [
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CommonModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatListModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './obra.component.html',
   styleUrl: './obra.component.css'
 })
@@ -76,14 +107,14 @@ export class ObraComponent {
     //inserta las siguientes hojas dentro del archivo nuevo
     //haciedno de esta manera que el archivo excel administrado por el sistema
     
-    await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
+    /*await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
     [
       parametros.hojasXLS.nombre.CONFIGURACION,
       parametros.hojasXLS.nombre.PRESUPUESTOCONTRACTUAL,
       parametros.hojasXLS.nombre.CALENDARIOVALORIZADOAVANCEOBRA,
       parametros.hojasXLS.nombre.INDICEVALORIZACION,
       
-    ])
+    ])*/
     
   
     
@@ -196,7 +227,7 @@ this.loading = true
     })
   }
 
-  onChange(event: HtmlInputEvent) {
+  onChange(event: any) {
     if (event.target.files && event.target.files[0]) {
       this.file = <File>event.target.files[0];
       

@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit{
      */
     //buscar en la hoja excel si existe el id de la obra de este usuario 
     
-    const isxlsSistema = await getObraid()//buscar IExcelObraId
+    /*const isxlsSistema = await getObraid()//buscar IExcelObraId
     
 
     
@@ -87,7 +87,8 @@ export class DashboardComponent implements OnInit{
       }
       
       
-    }
+    }*/
+    this.habilitaconfiguracionObra = true
   }
 
   @ViewChild('configuracionObraDialogTemplate')  configuracionObraDialogTemplate: TemplateRef<any> | undefined;

@@ -1,4 +1,4 @@
-const PROXY_HOST = 'https://miniature-space-zebra-7v7j9qg6xrjx266g-4200.app.github.dev/';
+const PROXY_HOST = 'https://4200-monospace-sadfrontenddrive17-1713883251017.cluster-2xid2zxbenc4ixa74rpk7q7fyk.cloudworkstations.dev';
 const PROXY_CONFIG = [
     {
         context:['./'],
