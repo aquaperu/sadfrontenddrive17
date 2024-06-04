@@ -1,5 +1,5 @@
 export const restendpoint = {
-    base:'https://sadbackendgoogledrive.onrender.com/',//'https://192.168.1.86:3033/',
+    base:'https://sadbackendgoogledrive.onrender.com/',//'https://sadbackendgoogledrive.onrender.com/',//'https://192.168.1.86:3033/',
     usuario:{
         lista:'auth/listaauth',
         login:'auth/login',
