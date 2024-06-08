@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, Output, TemplateRef, ViewChild, EventEmitter,ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Output, TemplateRef, ViewChild, EventEmitter,ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
@@ -27,7 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 
 
 interface HtmlInputEvent extends Event {
@@ -40,7 +40,8 @@ export interface obraPartialForm{
 }
 interface  IConfigViews{
   activateMetadiaria:boolean,
-  activateConfiguracion:boolean
+  activateConfiguracion:boolean,
+  formdata?:any
 }
 
 @Component({
@@ -62,12 +63,12 @@ interface  IConfigViews{
     MatCheckboxModule,
     MatDividerModule,
     MatListModule,
-    MatProgressSpinnerModule
+    NgStyle
   ],
   templateUrl: './obra.component.html',
   styleUrl: './obra.component.css'
 })
-export class ObraComponent {
+export class ObraComponent implements OnDestroy {
 
   loading: boolean = false;
   photoSelected: string | ArrayBuffer | null;
@@ -82,8 +83,8 @@ export class ObraComponent {
   
   //maneja un dialog de tipo bottom
   @ViewChild('dialogoPostRegistroObra')  dialogoPostRegistroObra: TemplateRef<any> | undefined;
-  //
-  @ViewChild('yesNoTemplateValorizacion')  yesNoTemplateValorizacion: TemplateRef<any> | undefined;
+  
+  @ViewChild('warningDialog')  warningDialog: TemplateRef<any> | undefined;
 
   bottomSheetRef = {} as MatBottomSheetRef<ReusablebottomsheetComponent>
 
@@ -102,6 +103,16 @@ export class ObraComponent {
       private cdr: ChangeDetectorRef,
 
   ){ }
+  //ayuda a emitir el evento hacie el padre, despues que el usuario acepta 
+  //el cuadro de dialogo
+  ngOnDestroy(): void {
+    this.valueResponse.emit({
+      activateConfiguracion:false,
+      activateMetadiaria:true,
+      formdata:this.form.formGroup.value.alias
+    })
+    this.openWarninDialog()
+  }
   async ngOnInit() {
     
     //inserta las siguientes hojas dentro del archivo nuevo
@@ -157,7 +168,7 @@ export class ObraComponent {
   
   
       this.status = 'uploading';
-      const obraId = await getObraid()
+      const obraId = '65d91ea6cc44ee97bd625b0d'//await getObraid() habilitar cuando se trabaja desde produccion
       
       formData.append('file', this.file, this.file.name);
       formData.append('obraId',obraId )
@@ -171,23 +182,30 @@ this.loading = true
      
       //dialogo de informacion de creacion de las hojas
 
-      this.openYesNoDialog()
+      //this.openYesNoDialog()
+      //this.openWarninDialog()
       //controla el renderisado de los botones de las apps
       //se llamó desde dashboard, entonces la respuesta tambien es a dashboard
 
-      this.valueResponse.emit({
+      /*this.valueResponse.emit({
         activateConfiguracion:false,
         activateMetadiaria:true,
-      })
+      })*/
+      
 
-          await setObraId(obra.obraId)
+          //await setObraId(obra.obraId)habilitar cuando se trabaja de modo normal
     },
     error:(err:any)=> {
       console.error(err)
     
     },
     complete:async()=> {
-      
+      /*this.valueResponse.emit({
+        activateConfiguracion:false,
+        activateMetadiaria:true,
+        formdata:this.form.formGroup.value.alias
+      })*/
+      //this.router.navigate(['dashboard/main']);
       
     },
  });
@@ -195,35 +213,39 @@ this.loading = true
     
   }
   
-  openYesNoDialog() {
+  /**
+   * metodo que muestra la advertencia de uso de S.A.D
+   * @param event 
+   */
+  openWarninDialog() {
 
     const dialogRef = this.dialog.open(ReusabledialogComponent, {//cambiar por otro de formulario 
       width: '290px',
-      
-      
+    
       panelClass: 'panelclassdialog',
       //en la configuracion de data, tambien se puede enviar el alto del contenido mat-dialog-content
       //matdialogcontent_height:'121px', está solo configurado para yesNoTemplateValorizacion 
       data: <IDynamicDialogConfig>{
         title: 'Información',
         //por medio del atributo dialog content el componente DialogsinoComponent renderizara el contenido 
-        dialogContent: this.yesNoTemplateValorizacion, 
+        dialogContent: this.warningDialog, 
         acceptButtonTitle: 'Ok',
         //declineButtonTitle: 'No!'
-        matdialogcontent_height:'190px'
+        matdialogcontent_height:'200px'
       }
     });
 
     dialogRef.afterClosed().subscribe( async(result) => {
-      if (!result) return;
       
+      if (!result) return;
+      console.log(result)
       //configurar el calendario valorizaco de avance de obra
       //cada selda es un mes empezando por "G"
       //peligro, el codigo de importar hoja, no me permite la lectura con await
       //por ahora el cronograma se copiará tal cual está en el excel contractual
       
       
-      this.router.navigate(['dashboard/main'])
+      
     })
   }
 

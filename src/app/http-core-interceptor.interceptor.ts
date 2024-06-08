@@ -1,12 +1,15 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+
 import { catchError, throwError } from 'rxjs';
 export const httpCoreInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  const authToken = 'YOUR_AUTH_TOKEN_HERE';
+  const authToken = localStorage.getItem('token');
+  console.log(authToken)
   // interceptor que habilita el cors en el cliente de donde está corriendo , tambien debe estar registrado en el servidor
   //la otra opcion es crear un archivo proxy.config.js , poner el siguiente contenido, es el servidor de front end
   /**
-   * const PROXY_HOST = 'https://miniature-space-zebra-7v7j9qg6xrjx266g-4200.app.github.dev/';
-      const PROXY_CONFIG = [
+   * 
+   * const PROXY_HOST = 'https://4200-idx-sadfrontenddrive17-1717536473815.cluster-m7tpz3bmgjgoqrktlvd4ykrc2m.cloudworkstations.dev/';
+const PROXY_CONFIG = [
     {
         context:['./'],
         target:PROXY_HOST,
@@ -25,13 +28,18 @@ en la seccion  "serve": {
    */
   // Clone the request and add the authorization header
   const authReq = req.clone({
-    setHeaders: {
+    /*setHeaders: {
       'Content-Type':'application/json',
       
-      'Access-Control-Allow-Origin': 'https://4200-idx-sadfrontenddrive17-1717536473815.cluster-m7tpz3bmgjgoqrktlvd4ykrc2m.cloudworkstations.dev/',
+      'Access-Control-Allow-Origin': 'https://4200-idx-sadfrontenddrive17-1717632774583.cluster-kc2r6y3mtba5mswcmol45orivs.cloudworkstations.dev/',
+      //https://4200-idx-sadfrontenddrive17-1717632774583.cluster-kc2r6y3mtba5mswcmol45orivs.cloudworkstations.dev/autenticar/login
      
       Authorization: `Bearer ${authToken}`
-    }
+    }*/
+    headers: req.headers
+    .set('authorization', `${authToken}`)
+    //.set('Access-Control-Allow-Origin','https://4200-idx-sadfrontenddrive17-1717632774583.cluster-kc2r6y3mtba5mswcmol45orivs.cloudworkstations.dev/')
+    //.set('Content-Type','application/json')
   });
   console.log({"llamando desde el interceptor":authToken})
 

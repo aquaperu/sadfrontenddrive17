@@ -30,6 +30,7 @@ export class ObraService {
  */
   private transformObraToObject(obraId:number){
     //'https://192.168.1.86:3033/obra/buscaobrabyId/obraId'
+    console.log({"url a la que se accede:":`${restendpoint.base}${restendpoint.obra.buscaobrabyId}/${obraId}`})
     this.httpClient.get<IObra>(`${restendpoint.base}${restendpoint.obra.buscaobrabyId}/${obraId}`).subscribe(
       {
         next:(obra:IObra)=> {

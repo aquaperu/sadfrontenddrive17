@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit{
   panel:Subscription
 
   recibiRespuesta($event:any){
+    console.log({"dentro de recibi respuesta":$event})
     this.habilitaMetaDiaria = $event.activateMetadiaria
     this.habilitaconfiguracionObra = $event.activateConfiguracion
   }
@@ -207,22 +208,24 @@ export class DashboardComponent implements OnInit{
   async configuracionObra() {
     //esta configuracion de navegacion, es posible debido a que se usa una plantilla de destino en este mismo componente, con el renderisado en router-outlet
 
-    this.router.navigate(['dashboard/main/obra/mainobra']);     
+    //this.router.navigate(['dashboard/main/obra/mainobra']);     
     
     const dialogRef = this.dialog.open(ReusabledialogComponent, 
       {
         /**efecto full screen */
         ...configBase,
         /** */
+        panelClass:"dialog-panel",
         data: <IDynamicDialogConfig>{
           title: 'Información de la Obra',
           dialogContent: this.configuracionObraDialogTemplate,
-          //acceptButtonTitle: 'Ok',
+          acceptButtonTitle: 'Ok',
           //declineButtonTitle: ''
         }
       });
     //cuando se llama a la ruta, nunca se ejecuta esta parte
     this.panel = dialogRef.afterClosed().subscribe(async result => {
+      console.log({"al final del registro":result})
       
       if (!result) return;
       // delete it

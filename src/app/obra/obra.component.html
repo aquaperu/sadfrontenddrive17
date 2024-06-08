@@ -30,6 +30,10 @@
                         
               </div>
     </mat-card-content>
+   <!-- 
+    el trabajo del boton de crear obra, pasa a la responsabiildad del cuadro de dialogo del padre es decir
+    en dashboard.
+   
     <mat-card-actions>
         <div *ngIf="loading; else content">
 
@@ -48,19 +52,18 @@
           </ng-template>
 
         
-      </mat-card-actions>
+      </mat-card-actions>-->
     </mat-card>
     
 </section>
 
 <!--observacion: Todo lo que está dentro de ng-template se nuestra en el dialogo, asi como tambien el boton de cierre-->
-<ng-template #yesNoTemplateValorizacion>
+<ng-template #warningDialog>
     <section>
         <mat-divider></mat-divider>
-        <br>
-        <p>Éste archivo excel ahora es compatible con el S.A.D.</p>
-        <p>Asegurese siempre de guardar su información.</p>
-        <p>El S.A.D NO recupera ninguna información.</p>
+        <p [ngStyle]="{'font-size.px':12}">Éste archivo excel ahora es compatible con el S.A.D.</p>
+        <p [ngStyle]="{'font-size.px':12}">Asegurese siempre de guardar su información.</p>
+        <p [ngStyle]="{'font-size.px':12}">El S.A.D NO recupera ninguna información.</p>
         <!--
         <mat-checkbox   [checked]="true" [disabled]="true"></mat-checkbox>
         <mat-checkbox   [checked]="true" [disabled]="true"></mat-checkbox>

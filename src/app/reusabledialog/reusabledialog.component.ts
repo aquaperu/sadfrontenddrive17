@@ -71,4 +71,7 @@ export class ReusabledialogComponent {
     this.elementRef.nativeElement.style.setProperty('--matdialogcontent-height',this.data.matdialogcontent_height)
     this.elementRef.nativeElement.style.setProperty('--matdialogcontent-width',this.data.matdialogcontent_width)
   }
+  hijo(miVar:string){
+    console.log({"disparador":miVar})
+  }
 }

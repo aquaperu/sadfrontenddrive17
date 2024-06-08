@@ -1,4 +1,4 @@
-const PROXY_HOST = 'https://4200-idx-sadfrontenddrive17-1717536473815.cluster-m7tpz3bmgjgoqrktlvd4ykrc2m.cloudworkstations.dev/';
+const PROXY_HOST = 'https://192.168.1.86:3033/';
 const PROXY_CONFIG = [
     {
         context:['./'],
