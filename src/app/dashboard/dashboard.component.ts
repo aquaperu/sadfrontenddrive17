@@ -42,7 +42,9 @@ export class DashboardComponent implements OnInit{
 
   panel:Subscription
 
-  recibiRespuesta($event:any){
+  //captura los datos del child en ngDestroy con emiter
+  //$event los captura
+  recibiRespuestaDesdeAppObraEnconfiguracionObraDialogTemplate($event:any){
     console.log({"dentro de recibi respuesta":$event})
     this.habilitaMetaDiaria = $event.activateMetadiaria
     this.habilitaconfiguracionObra = $event.activateConfiguracion
@@ -67,7 +69,7 @@ export class DashboardComponent implements OnInit{
      */
     //buscar en la hoja excel si existe el id de la obra de este usuario 
     
-    /*const isxlsSistema = await getObraid()//buscar IExcelObraId
+    const isxlsSistema = await getObraid()//buscar IExcelObraId
     
 
     
@@ -88,7 +90,7 @@ export class DashboardComponent implements OnInit{
       }
       
       
-    }*/
+    }
     this.habilitaconfiguracionObra = true
   }
 
@@ -111,7 +113,6 @@ export class DashboardComponent implements OnInit{
     //-calendario valorizado de obra
     //- indice
     const der =  await  capturaDatosPrincipalesXls()
-
     let i = 0;
     for(i;i<der.length - 2;i++){//valida el llenado de los campos obligatorios de la hoja configuracion
       
@@ -121,7 +122,7 @@ export class DashboardComponent implements OnInit{
       }
 
     }
-      
+    
     //valida que almenos una partida esté llenada
     const jo = await obtenDatosSegunRangoXls(parametros.hojasXLS.nombre.PRESUPUESTOCONTRACTUAL,["B6:B6"])
     if(jo[0][0]===""){
@@ -206,9 +207,6 @@ export class DashboardComponent implements OnInit{
   }
 
   async configuracionObra() {
-    //esta configuracion de navegacion, es posible debido a que se usa una plantilla de destino en este mismo componente, con el renderisado en router-outlet
-
-    //this.router.navigate(['dashboard/main/obra/mainobra']);     
     
     const dialogRef = this.dialog.open(ReusabledialogComponent, 
       {
@@ -223,7 +221,7 @@ export class DashboardComponent implements OnInit{
           //declineButtonTitle: ''
         }
       });
-    //cuando se llama a la ruta, nunca se ejecuta esta parte
+    
     this.panel = dialogRef.afterClosed().subscribe(async result => {
       console.log({"al final del registro":result})
       

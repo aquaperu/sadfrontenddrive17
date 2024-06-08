@@ -76,9 +76,11 @@
 
 <!--cargará esta plantilla en caso el archivo es nuevo-->
 <ng-template #configuracionObraDialogTemplate>
-    <!--es el hijo , que necesita disparar las activaciones de las opciones-->
+    <!--es el hijo , que necesita disparar las activaciones de las opciones
+    valueRespnse Emite datos desde el Hijo, y son capturados por $event
+    -->
 
-    <app-mainobra (valueResponse)="recibiRespuesta($event)"></app-mainobra>
-    <!--<router-outlet ></router-outlet> -->
+    <app-mainobra (valueResponse)="recibiRespuestaDesdeAppObraEnconfiguracionObraDialogTemplate($event)"></app-mainobra>
+    
 
 </ng-template>

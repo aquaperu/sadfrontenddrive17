@@ -1,20 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, Output, TemplateRef, ViewChild, EventEmitter,ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {  Component, Output, TemplateRef, ViewChild, EventEmitter,ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
-import { createForm, FormType, subformComponentProviders } from 'ngx-sub-form';
+import { createForm, FormType } from 'ngx-sub-form';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
 import { IDynamicDialogConfig, ReusabledialogComponent } from '../reusabledialog/reusabledialog.component';
-import { ReusablebottomsheetComponent } from '../reusablebottomsheet/reusablebottomsheet.component';
 import { IObra, ObraService } from './obra.service';
-import { ValorizacionService } from '../valorizacion/valorizacion.service';
 import { getObraid, setObraId } from '../../global/ajusteGlobal';
-import { parametros } from '../../global/parametroGlobal';
-import { importaHojasXls } from '../../funcionesComunes/importarHojas';
-import { restendpoint } from '../../endpoint/restendpoint';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
@@ -28,7 +19,10 @@ import {MatListModule} from '@angular/material/list';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CommonModule, NgStyle } from '@angular/common';
-
+import { importaHojasXls } from '../../funcionesComunes/importarHojas';
+import { restendpoint } from '../../endpoint/restendpoint';
+import { parametros } from '../../global/parametroGlobal';
+import { capturaDatosPrincipalesXls } from '../../helpers/helperobra/capturaDatosPrincipales';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -38,10 +32,9 @@ export interface obraPartialForm{
   alias:string;
   tipologia:string
 }
-interface  IConfigViews{
-  activateMetadiaria:boolean,
-  activateConfiguracion:boolean,
-  formdata?:any
+interface IFormObra{
+  alias:string;
+  tipologia:string;
 }
 
 @Component({
@@ -76,17 +69,9 @@ export class ObraComponent implements OnDestroy {
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file: File | null = null; // Variable to store file
   
-
-  @Output('valueResponse')valueResponse:EventEmitter<IConfigViews> = new EventEmitter()
-
-
-  
-  //maneja un dialog de tipo bottom
-  @ViewChild('dialogoPostRegistroObra')  dialogoPostRegistroObra: TemplateRef<any> | undefined;
+  @Output('valueResponse')valueResponse:EventEmitter<IFormObra> = new EventEmitter()
   
   @ViewChild('warningDialog')  warningDialog: TemplateRef<any> | undefined;
-
-  bottomSheetRef = {} as MatBottomSheetRef<ReusablebottomsheetComponent>
 
   public form = createForm<obraPartialForm>(this,{
     formType:FormType.SUB,
@@ -98,18 +83,19 @@ export class ObraComponent implements OnDestroy {
 
   constructor(
       public dialog: MatDialog,
-      private router:Router,
       private obraService:ObraService,
       private cdr: ChangeDetectorRef,
 
   ){ }
-  //ayuda a emitir el evento hacie el padre, despues que el usuario acepta 
-  //el cuadro de dialogo
+  
+  /**
+   * ayuda a emitir el evento hacia el padre, despues que el usuario acepta 
+   * el cuadro de dialogo 
+   */
   ngOnDestroy(): void {
     this.valueResponse.emit({
-      activateConfiguracion:false,
-      activateMetadiaria:true,
-      formdata:this.form.formGroup.value.alias
+      alias:this.form.formGroup.value.alias,
+      tipologia:this.form.formGroup.value.tipologia
     })
     this.openWarninDialog()
   }
@@ -118,31 +104,19 @@ export class ObraComponent implements OnDestroy {
     //inserta las siguientes hojas dentro del archivo nuevo
     //haciedno de esta manera que el archivo excel administrado por el sistema
     
-    /*await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
+    await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
     [
       parametros.hojasXLS.nombre.CONFIGURACION,
       parametros.hojasXLS.nombre.PRESUPUESTOCONTRACTUAL,
       parametros.hojasXLS.nombre.CALENDARIOVALORIZADOAVANCEOBRA,
       parametros.hojasXLS.nombre.INDICEVALORIZACION,
-      
-    ])*/
-    
-  
-    
-    
-  
+    ])
   }
-  
-  //por lo visto en excel, para que rutee despues de haber llamado al dialog, lo unico que
-  //se tiene que poner en la ruta.
   async creaObra(){
 
     //trabajando con las imagen
     if (this.file) {
       const formData = new FormData();
-  
-      
-    
     //fin de las imagenes
   
   const cuerpoExtra = [
@@ -153,7 +127,7 @@ export class ObraComponent implements OnDestroy {
   ]
   
   
-  /*let body = await capturaDatosPrincipalesXls()
+  let body = await capturaDatosPrincipalesXls()
  
   if(body[33] == ''){
     body[33]=[0]//adelanto directo
@@ -161,14 +135,11 @@ export class ObraComponent implements OnDestroy {
   if(body[34] == ''){
     body[34]=[0]//adelanto de materiales
   }
-
+console.log({"datos capturados":body})
   body = body.concat(cuerpoExtra)
- 
-*/
-  
   
       this.status = 'uploading';
-      const obraId = '65d91ea6cc44ee97bd625b0d'//await getObraid() habilitar cuando se trabaja desde produccion
+      const obraId = await getObraid()
       
       formData.append('file', this.file, this.file.name);
       formData.append('obraId',obraId )
@@ -179,34 +150,13 @@ this.loading = true
     next: async( obra:IObra)=> {//respuesta del servidor 
       this.loading = false
       console.log({"respuesta del servidor en mainobra":obra})
-     
-      //dialogo de informacion de creacion de las hojas
-
-      //this.openYesNoDialog()
-      //this.openWarninDialog()
-      //controla el renderisado de los botones de las apps
-      //se llamó desde dashboard, entonces la respuesta tambien es a dashboard
-
-      /*this.valueResponse.emit({
-        activateConfiguracion:false,
-        activateMetadiaria:true,
-      })*/
-      
-
-          //await setObraId(obra.obraId)habilitar cuando se trabaja de modo normal
+      await setObraId(obra.obraId)
     },
     error:(err:any)=> {
       console.error(err)
     
     },
     complete:async()=> {
-      /*this.valueResponse.emit({
-        activateConfiguracion:false,
-        activateMetadiaria:true,
-        formdata:this.form.formGroup.value.alias
-      })*/
-      //this.router.navigate(['dashboard/main']);
-      
     },
  });
 }
@@ -222,7 +172,7 @@ this.loading = true
     const dialogRef = this.dialog.open(ReusabledialogComponent, {//cambiar por otro de formulario 
       width: '290px',
     
-      panelClass: 'panelclassdialog',
+      panelClass: 'panelclassdialog_warning_sad',
       //en la configuracion de data, tambien se puede enviar el alto del contenido mat-dialog-content
       //matdialogcontent_height:'121px', está solo configurado para yesNoTemplateValorizacion 
       data: <IDynamicDialogConfig>{
@@ -231,7 +181,7 @@ this.loading = true
         dialogContent: this.warningDialog, 
         acceptButtonTitle: 'Ok',
         //declineButtonTitle: 'No!'
-        matdialogcontent_height:'200px'
+        matdialogcontent_height:'210px'
       }
     });
 
