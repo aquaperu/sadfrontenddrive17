@@ -105,13 +105,13 @@ export class ObraComponent implements OnDestroy {
     //inserta las siguientes hojas dentro del archivo nuevo
     //haciedno de esta manera que el archivo excel administrado por el sistema
     
-    /*await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
+    await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
     [
       parametros.hojasXLS.nombre.CONFIGURACION,
       parametros.hojasXLS.nombre.PRESUPUESTOCONTRACTUAL,
       parametros.hojasXLS.nombre.CALENDARIOVALORIZADOAVANCEOBRA,
       parametros.hojasXLS.nombre.INDICEVALORIZACION,
-    ])*/
+    ])
   }
   async creaObra(){
 
