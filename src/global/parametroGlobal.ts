@@ -27,10 +27,8 @@ const datosObra:string[] = [
     "D3:D7",    //UBICACION GEOGRAFICA
     "E11:E12",  //PROPIETARIO
     "F16:F20",  //CONTRATISTA
-    "G24:G34",  //PERSONAL CLAVE
-    "G22:G23",  //RESIDENTE DE OBRA
-    "G27:G28",  //SUPERVISOR
-    "O3:O8",    //EJECUCION
+    "G24:G34",  //PERSONAL CLAVE//CON CELDAS EN BLANCO
+    "O3:O8",   //EJECUCION
     "R9:R11",   //EJECUCION fechas en formato "mm/dd/yyyy" neesario para los calculos de fechas
     "O12",      //EJECUCION PLAZO DE EJECUCION CONTRACTUAL
     "O13:O18",  //CONTINUACION DE EJECUCION
