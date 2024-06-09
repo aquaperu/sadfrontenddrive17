@@ -92,25 +92,26 @@ export class ObraComponent implements OnDestroy {
    * ayuda a emitir el evento hacia el padre, despues que el usuario acepta 
    * el cuadro de dialogo 
    */
-  ngOnDestroy(): void {
+  async ngOnDestroy() {
     this.valueResponse.emit({
       alias:this.form.formGroup.value.alias,
       tipologia:this.form.formGroup.value.tipologia
     })
-    this.openWarninDialog()
+    await this.creaObra()
+    
   }
   async ngOnInit() {
     
     //inserta las siguientes hojas dentro del archivo nuevo
     //haciedno de esta manera que el archivo excel administrado por el sistema
     
-    await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
+    /*await importaHojasXls(`${restendpoint.base}${restendpoint.obra.descargarplantilla}`,
     [
       parametros.hojasXLS.nombre.CONFIGURACION,
       parametros.hojasXLS.nombre.PRESUPUESTOCONTRACTUAL,
       parametros.hojasXLS.nombre.CALENDARIOVALORIZADOAVANCEOBRA,
       parametros.hojasXLS.nombre.INDICEVALORIZACION,
-    ])
+    ])*/
   }
   async creaObra(){
 
@@ -157,6 +158,9 @@ this.loading = true
     
     },
     complete:async()=> {
+      //habilita meta diaria y presupuesto
+      
+      this.openWarninDialog()
     },
  });
 }

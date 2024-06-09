@@ -218,6 +218,8 @@ export class DashboardComponent implements OnInit{
           title: 'Información de la Obra',
           dialogContent: this.configuracionObraDialogTemplate,
           acceptButtonTitle: 'Ok',
+          //matdialogcontent_height:'750px',//alto
+          //matdialogcontent_width:'321px'//ancho
           //declineButtonTitle: ''
         }
       });
@@ -226,7 +228,10 @@ export class DashboardComponent implements OnInit{
       console.log({"al final del registro":result})
       
       if (!result) return;
-      // delete it
+      this.habilitaMetaDiaria = true;
+      this.habilitaValorizacion = true
+      
+      
      
       
     });

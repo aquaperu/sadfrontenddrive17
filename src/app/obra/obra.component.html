@@ -1,29 +1,29 @@
 <section [formGroup]="form.formGroup" >
     <mat-card id="card" style="text-align: center; padding: 30px;">
-        <mat-card-title>
+        <mat-card-title [ngStyle]="{'font-size.px':12}">
             Información Adicional
         </mat-card-title>
     
         <mat-card-content>
 
             
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="fix_matformfiel">
                 <input matInput placeholder="Alias" [formControlName]="form.formControlNames.alias" autocomplete="off" >
             </mat-form-field>
     
             
 
-            <mat-form-field appearance="outline">
-                <mat-label>Tipología</mat-label>
+            <mat-form-field appearance="outline" class="fix_matformfiel">
+                <mat-label [ngStyle]="{'font-size.px':12}">Tipología</mat-label>
                 <mat-select [formControlName]="form.formControlNames.tipologia">
-                  <mat-option value="saneamiento">Saneamiento</mat-option>
-                  <mat-option value="colegio">Colegio</mat-option>
-                  <mat-option value="carretera">Carretera</mat-option>
+                  <mat-option value="saneamiento" [ngStyle]="{'font-size.px':12}" >Saneamiento</mat-option>
+                  <mat-option value="colegio" [ngStyle]="{'font-size.px':12}" >Colegio</mat-option>
+                  <mat-option value="carretera" [ngStyle]="{'font-size.px':12}" >Carretera</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <div class="centrado">
-              <p>Seleccione Una Imagen Para la Cabecera de sus Valorizaciones</p>
+              <p [ngStyle]="{'font-size.px':12}">Seleccione Una Imagen Para la Cabecera de sus Valorizaciones</p>
               <input  type="file" class="d-none" (change)="onChange($event)" #photoInput >
                         <img mat-card-image [src]="photoSelected || '/assets/imagen.png'" class="img-fluid" alt="No image" width="150px" height="150px"
                         (click)="photoInput.click()" >
@@ -61,9 +61,9 @@
 <ng-template #warningDialog>
     <section>
         <mat-divider></mat-divider>
-        <p [ngStyle]="{'font-size.px':12,'color':'red'}">Éste archivo excel ahora es compatible con el S.A.D.</p>
-        <p [ngStyle]="{'font-size.px':12,'color':'red'}">Asegurese siempre de guardar su información.</p>
-        <p [ngStyle]="{'font-size.px':12,'color':'red'}">El S.A.D NO recupera ninguna información.</p>
+        <p [ngStyle]="{'font-size.px':12,'color':'#007aff'}">Éste archivo excel ahora es compatible con el S.A.D.</p>
+        <p [ngStyle]="{'font-size.px':12,'color':'#007aff'}">Asegurese siempre de guardar su información.</p>
+        <p [ngStyle]="{'font-size.px':12,'color':'#007aff'}">El S.A.D NO recupera ninguna información.</p>
         <!--
         <mat-checkbox   [checked]="true" [disabled]="true"></mat-checkbox>
         <mat-checkbox   [checked]="true" [disabled]="true"></mat-checkbox>

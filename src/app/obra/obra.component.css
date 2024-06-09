@@ -235,4 +235,11 @@ mat-form-field{
 input[type='file']{
   display: none;
 }
-
+.fix_matformfiel{
+  --mat-form-field-container-text-size: 12px;
+  --mat-form-field-container-height: 28px;
+  --mat-form-field-filled-label-display: block;
+  --mat-form-field-container-vertical-padding: 8px;
+  --mat-form-field-filled-with-label-container-padding-top: 12px;
+  --mat-form-field-filled-with-label-container-padding-bottom: 4px
+}
